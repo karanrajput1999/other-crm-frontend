@@ -45,7 +45,7 @@ const AddLead = () => {
 
   const dispatch = useDispatch();
 
-  const { dropdowns } = useSelector((state) => state.AddLead);
+  const { dropdowns, userData } = useSelector((state) => state.AddLead);
 
   useEffect(() => {
     dispatch(getLeads());
@@ -146,77 +146,80 @@ const AddLead = () => {
                   <h4 className="card-title mb-0" style={{ fontSize: "20px" }}>
                     Create Lead
                   </h4>
-                  <ButtonGroup>
-                    <UncontrolledDropdown isOpen={addDropdownOpen}>
-                      <DropdownToggle
-                        tag="button"
-                        className="btn btn-primary"
-                        onClick={() => setAddDropdownOpen(!addDropdownOpen)}
-                      >
-                        Add Dropdown <i className="mdi mdi-chevron-down"></i>
-                      </DropdownToggle>
-                      <DropdownMenu className="dropdown-menu-md p-4">
-                        <Form onSubmit={(e) => dropdownHandleSubmit(e)}>
-                          <div className="mb-2">
-                            <Label htmlFor="category" className="form-label">
-                              Dropdown Category
-                            </Label>
-                            <Select
-                              id="category"
-                              name="category"
-                              value={singleCategoryOption}
-                              onChange={(category) => {
-                                handleSelectSingle(category);
-                                dropdownValidation.setFieldValue(
-                                  "category",
-                                  category.value
-                                );
-                              }}
-                              options={projectCategoryOptions}
-                              placeholder="Select Category"
-                            />
-                          </div>
 
-                          <div className="mb-2">
-                            <Label
-                              htmlFor="dropdownName"
-                              className="form-label"
-                            >
-                              Dropdown Name
-                            </Label>
+                  {userData?.roleId === 1 ? (
+                    <ButtonGroup>
+                      <UncontrolledDropdown isOpen={addDropdownOpen}>
+                        <DropdownToggle
+                          tag="button"
+                          className="btn btn-primary"
+                          onClick={() => setAddDropdownOpen(!addDropdownOpen)}
+                        >
+                          Add Dropdown <i className="mdi mdi-chevron-down"></i>
+                        </DropdownToggle>
+                        <DropdownMenu className="dropdown-menu-md p-4">
+                          <Form onSubmit={(e) => dropdownHandleSubmit(e)}>
+                            <div className="mb-2">
+                              <Label htmlFor="category" className="form-label">
+                                Dropdown Category
+                              </Label>
+                              <Select
+                                id="category"
+                                name="category"
+                                value={singleCategoryOption}
+                                onChange={(category) => {
+                                  handleSelectSingle(category);
+                                  dropdownValidation.setFieldValue(
+                                    "category",
+                                    category.value
+                                  );
+                                }}
+                                options={projectCategoryOptions}
+                                placeholder="Select Category"
+                              />
+                            </div>
 
-                            <Input
-                              id="dropdownName"
-                              name="dropdownName"
-                              className="form-control"
-                              placeholder="Hindi, Bhojpuri etc."
-                              type="text"
-                              onChange={dropdownValidation.handleChange}
-                              onBlur={dropdownValidation.handleBlur}
-                              value={dropdownValidation.values.dropdownName}
-                              invalid={
-                                dropdownValidation.touched.dropdownName &&
-                                dropdownValidation.errors.dropdownName
-                                  ? true
-                                  : false
-                              }
-                            />
+                            <div className="mb-2">
+                              <Label
+                                htmlFor="dropdownName"
+                                className="form-label"
+                              >
+                                Dropdown Name
+                              </Label>
 
-                            {dropdownValidation.touched.dropdownName &&
-                            dropdownValidation.errors.dropdownName ? (
-                              <FormFeedback type="invalid">
-                                {dropdownValidation.errors.dropdownName}
-                              </FormFeedback>
-                            ) : null}
-                          </div>
+                              <Input
+                                id="dropdownName"
+                                name="dropdownName"
+                                className="form-control"
+                                placeholder="Hindi, Bhojpuri etc."
+                                type="text"
+                                onChange={dropdownValidation.handleChange}
+                                onBlur={dropdownValidation.handleBlur}
+                                value={dropdownValidation.values.dropdownName}
+                                invalid={
+                                  dropdownValidation.touched.dropdownName &&
+                                  dropdownValidation.errors.dropdownName
+                                    ? true
+                                    : false
+                                }
+                              />
 
-                          <Button type="submit" className="btn btn-primary">
-                            Add
-                          </Button>
-                        </Form>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </ButtonGroup>
+                              {dropdownValidation.touched.dropdownName &&
+                              dropdownValidation.errors.dropdownName ? (
+                                <FormFeedback type="invalid">
+                                  {dropdownValidation.errors.dropdownName}
+                                </FormFeedback>
+                              ) : null}
+                            </div>
+
+                            <Button type="submit" className="btn btn-primary">
+                              Add
+                            </Button>
+                          </Form>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </ButtonGroup>
+                  ) : null}
                 </CardHeader>
 
                 <CardBody>
